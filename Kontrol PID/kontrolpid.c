@@ -2,7 +2,7 @@
 This program was created by the
 CodeWizardAVR V3.14 Advanced
 Automatic Program Generator
-© Copyright 1998-2014 Pavel Haiduc, HP InfoTech s.r.l.
+Â© Copyright 1998-2014 Pavel Haiduc, HP InfoTech s.r.l.
 http://www.hpinfotech.com
 
 Project : 
@@ -32,8 +32,8 @@ Data Stack size         : 128
 #include <alcd.h>
 
 // Declare your global variables here
-float KP=1, KI=0.5, KD=0.0005, error_sblmI=0,ntc,settingpoin=33, error_sblmD=0, outPID, Tc=0.01, error, errorI,errorD, outP, outI, outD,hasil,hasil1,result,nilai_sensor;
-int x;
+float KP=1, KI=0.5, KD=0.0005, error_sblmI=0,ntc,settingpoin=60, error_sblmD=0, outPID, Tc=0.01, error, errorI,errorD, outP, outI, outD,hasil1,result,nilai_sensor;
+// int x; ,hasil
 unsigned char temp[30], kirim[30];
 // Standard Input/Output functions
 #include <stdio.h>
@@ -152,7 +152,7 @@ UCSRA=(0<<RXC) | (0<<TXC) | (0<<UDRE) | (0<<FE) | (0<<DOR) | (0<<UPE) | (0<<U2X)
 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (1<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
 UCSRC=(1<<URSEL) | (0<<UMSEL) | (0<<UPM1) | (0<<UPM0) | (0<<USBS) | (1<<UCSZ1) | (1<<UCSZ0) | (0<<UCPOL);
 UBRRH=0x00;
-UBRRL=0x47;
+UBRRL=0x4D;
 
 // Analog Comparator initialization
 // Analog Comparator: Off
@@ -196,7 +196,7 @@ while (1)
       {
       // Place your code here
         ntc = read_adc(0);
-        settingpoin = read_adc(1)*0.097;
+        //settingpoin = read_adc(1)*0.097;
         hasil= log(10000.0*(ntc/(1023.0-ntc))) ;
         hasil1 =1/(((0.000017+(0.00037*hasil))-(0.00000031*hasil*hasil*hasil))); 
         nilai_sensor =((float)hasil1-273.15);
@@ -241,5 +241,7 @@ while (1)
         lcd_putchar(0xdf);//menampilkan karakter derajat 
         lcd_putsf("C"); 
         printf("%0.1f,%0.0f\r\n",nilai_sensor,settingpoin);
+        delay_ms(2000); 
+        lcd_clear(); 
       }
 }
